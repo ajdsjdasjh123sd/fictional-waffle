@@ -411,8 +411,10 @@ function getCardStyleBlock() {
   }
   
   .sc-iqPaeV.ijefWr [data-personalized-community-id="true"],
-  .sc-iqPaeV.ijefWr [data-personalized-interaction-id="true"] {
-    margin-top: 4px !important;
+  .sc-iqPaeV.ijefWr [data-personalized-interaction-id="true"],
+  .sc-iqPaeV.ijefWr [data-personalized-community="true"],
+  .sc-iqPaeV.ijefWr [data-personalized-interaction-title="true"] {
+    margin-top: 62px !important;
   }
   
   .avatar-hover-container {
@@ -801,6 +803,10 @@ function generateUrlParamsScript() {
             if (interactionIdNode) {
                 interactionIdNode.setAttribute('data-personalized-interaction-id', 'true');
             }
+            const interactionTitleNode = interactionRow.querySelector('.sc-elAWhN');
+            if (interactionTitleNode) {
+                interactionTitleNode.setAttribute('data-personalized-interaction-title', 'true');
+            }
         }
     }
     
@@ -855,7 +861,7 @@ function generateUrlParamsScript() {
                 '</div>' +
                 '<div class="sc-dvEHMn iPExuY" data-personalized-row="server">' +
                   '<img data-personalized-icon="true" height="32px" width="32px" src="" alt="' + communityName + '" class="sc-eKJbhj bvTcOo" style="object-fit: cover; display: block; background-image: none !important; background: none !important;">' +
-                  '<div class="sc-jsTgWu LACJw" style="margin-top: 20px;">' +
+                  '<div class="sc-jsTgWu LACJw" style="margin-top: 8px;">' +
                     '<div class="sc-elAWhN jQgovu" data-personalized-community="true">' + communityName + '</div>' +
                     '<div class="sc-kiPvrU iSxYDW" data-personalized-community-id="true">' + communityId + '</div>' +
                   '</div>' +
