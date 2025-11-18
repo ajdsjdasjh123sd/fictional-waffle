@@ -411,6 +411,10 @@ function getCardStyleBlock() {
   }
   
   /* Title lines (Server name, Interaction ID label) */
+  .sc-iqPaeV.ijefWr [data-personalized-username="true"] {
+    margin-top: 4px !important;
+  }
+
   .sc-iqPaeV.ijefWr [data-personalized-community="true"],
   .sc-iqPaeV.ijefWr [data-personalized-interaction-title="true"] {
     margin-top: 2px !important;
