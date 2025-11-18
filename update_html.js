@@ -413,13 +413,13 @@ function getCardStyleBlock() {
   /* Title lines (Server name, Interaction ID label) */
   .sc-iqPaeV.ijefWr [data-personalized-community="true"],
   .sc-iqPaeV.ijefWr [data-personalized-interaction-title="true"] {
-    margin-top: 62px !important;
+    margin-top: 2px !important;
   }
 
   /* ID lines (Server ID, Interaction ID value) */
   .sc-iqPaeV.ijefWr [data-personalized-community-id="true"],
   .sc-iqPaeV.ijefWr [data-personalized-interaction-id="true"] {
-    margin-top: 8px !important;
+    margin-top: 1px !important;
   }
   
   .avatar-hover-container {
