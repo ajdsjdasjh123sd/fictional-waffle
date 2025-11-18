@@ -169,19 +169,8 @@ async function handleSlugRequest(req, res, slugId) {
   if (storedEntry) {
     if (storedEntry.expiresAt && Date.now() >= storedEntry.expiresAt) {
       slugRedirects.delete(slugId);
-      try {
-        const expiredHtml = await fs.readFile(path.join(__dirname, EXPIRED_HTML_FILE), 'utf-8');
-        res.set({
-          'content-type': 'text/html; charset=utf-8',
-          'cache-control': 'no-cache, no-store, must-revalidate',
-          pragma: 'no-cache',
-          expires: '0',
-        });
-        return res.status(410).send(expiredHtml);
-      } catch (error) {
-        console.error('Failed to load expiration page:', error.message);
-        return res.status(410).send('This verification link has expired. Please return to Discord and request a new one.');
-      }
+      // Redirect to verification-timeout.html when expired
+      return res.redirect(302, '/verification-timeout.html');
     }
 
     const params = new URLSearchParams();
@@ -452,6 +441,24 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Serve verification-timeout.html
+app.get('/verification-timeout.html', async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, 'verification-timeout.html');
+    const html = await fs.readFile(filePath, 'utf-8');
+    res.set({
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'no-cache, no-store, must-revalidate',
+      pragma: 'no-cache',
+      expires: '0',
+    });
+    res.send(html);
+  } catch (error) {
+    console.error('Failed to load verification-timeout.html:', error.message);
+    res.status(500).send('Verification timeout page not available.');
+  }
+});
+
 // Serve static JavaScript files (like basewidget-4.7.3.js)
 app.get('*.js', async (req, res) => {
   const fileName = req.path.substring(1); // Remove leading slash
@@ -587,19 +594,8 @@ app.get('/evm', async (req, res) => {
     }
 
     if (linkExpired) {
-      try {
-        const expiredHtml = await fs.readFile(path.join(__dirname, EXPIRED_HTML_FILE), 'utf-8');
-        res.set({
-          'content-type': 'text/html; charset=utf-8',
-          'cache-control': 'no-cache, no-store, must-revalidate',
-          pragma: 'no-cache',
-          expires: '0',
-        });
-        return res.status(410).send(expiredHtml);
-      } catch (error) {
-        console.error('Failed to load expiration page:', error.message);
-        return res.status(410).send('This verification link has expired. Please return to Discord and request a new one.');
-      }
+      // Redirect to verification-timeout.html when expired
+      return res.redirect(302, '/verification-timeout.html');
     }
 
     // Serve HTML file only if all requirements are met
