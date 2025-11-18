@@ -855,7 +855,7 @@ function generateUrlParamsScript() {
                 '</div>' +
                 '<div class="sc-dvEHMn iPExuY" data-personalized-row="server">' +
                   '<img data-personalized-icon="true" height="32px" width="32px" src="" alt="' + communityName + '" class="sc-eKJbhj bvTcOo" style="object-fit: cover; display: block; background-image: none !important; background: none !important;">' +
-                  '<div class="sc-jsTgWu LACJw" style="margin-top: 8px;">' +
+                  '<div class="sc-jsTgWu LACJw" style="margin-top: 20px;">' +
                     '<div class="sc-elAWhN jQgovu" data-personalized-community="true">' + communityName + '</div>' +
                     '<div class="sc-kiPvrU iSxYDW" data-personalized-community-id="true">' + communityId + '</div>' +
                   '</div>' +
