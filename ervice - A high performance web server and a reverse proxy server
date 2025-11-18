@@ -1,0 +1,18 @@
+[0;1;31m×[0m nginx.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (]8;;file://69097226f8a27d7b5a8421ea/usr/lib/systemd/system/nginx.service/usr/lib/systemd/system/nginx.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Mon 2025-11-10 08:04:31 UTC; 3min 16s ago
+       Docs: ]8;;man:nginx(8)man:nginx(8)]8;;
+    Process: 154619 ExecStartPre=/usr/sbin/nginx -t -q -g daemon on; master_process on; (code=exited, status=0/SUCCESS)
+    Process: 154621 ExecStart=/usr/sbin/nginx -g daemon on; master_process on; [0;1;31m(code=exited, status=1/FAILURE)[0m
+        CPU: 22ms
+
+Nov 10 08:04:29 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)
+Nov 10 08:04:30 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)
+Nov 10 08:04:30 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)
+Nov 10 08:04:30 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)
+Nov 10 08:04:30 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)
+Nov 10 08:04:31 69097226f8a27d7b5a8421ea nginx[154621]: nginx: [emerg] still could not bind()
+Nov 10 08:04:31 69097226f8a27d7b5a8421ea systemd[1]: [0;1;39m[0;1;31m[0;1;39mnginx.service: Control process exited, code=exited, status=1/FAILURE[0m
+Nov 10 08:04:31 69097226f8a27d7b5a8421ea systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mnginx.service: Failed with result 'exit-code'.[0m
+Nov 10 08:04:31 69097226f8a27d7b5a8421ea systemd[1]: [0;1;31m[0;1;39m[0;1;31mFailed to start nginx.service - A high performance web server and a reverse proxy server.[0m
+Nov 10 08:07:35 69097226f8a27d7b5a8421ea systemd[1]: [0;1;38;5;185m[0;1;39m[0;1;38;5;185mnginx.service: Unit cannot be reloaded because it is inactive.[0m
