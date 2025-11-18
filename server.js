@@ -66,6 +66,10 @@ const oauthSessions = new Map();
 // Key: slugId, Value: { state, id, expiresAt, createdAt, extraParams }
 const slugRedirects = new Map();
 
+// Track expired slugs for a period to detect re-use attempts
+// Key: slugId, Value: expiration timestamp
+const expiredSlugs = new Map();
+
 // In-memory storage for valid states (to prevent fake/random state values)
 // Key: state, Value: { id, expiresAt, createdAt, userId, guildId, interactionId }
 const validStates = new Map();
@@ -87,6 +91,8 @@ setInterval(() => {
   for (const [slugId, data] of slugRedirects.entries()) {
     if (data.expiresAt && now >= data.expiresAt) {
       slugRedirects.delete(slugId);
+      // Track expired slug for 1 hour to detect re-use attempts
+      expiredSlugs.set(slugId, data.expiresAt);
       console.log(`[Slug Redirect] Cleaned up expired slug: ${slugId}`);
     }
   }
@@ -94,6 +100,12 @@ setInterval(() => {
   for (const [state, data] of validStates.entries()) {
     if (data.expiresAt && now >= data.expiresAt) {
       validStates.delete(state);
+    }
+  }
+  // Clean up expired slug tracking after 1 hour
+  for (const [slugId, expiredAt] of expiredSlugs.entries()) {
+    if (now >= expiredAt + (60 * 60 * 1000)) { // 1 hour after expiration
+      expiredSlugs.delete(slugId);
     }
   }
 }, 60 * 1000);
@@ -169,6 +181,8 @@ async function handleSlugRequest(req, res, slugId) {
   if (storedEntry) {
     if (storedEntry.expiresAt && Date.now() >= storedEntry.expiresAt) {
       slugRedirects.delete(slugId);
+      // Track expired slug for re-use detection
+      expiredSlugs.set(slugId, storedEntry.expiresAt);
       // Redirect to verification-timeout.html when expired
       return res.redirect(302, '/verification-timeout.html');
     }
@@ -185,6 +199,11 @@ async function handleSlugRequest(req, res, slugId) {
     const forwardUrl = `${SLUG_DESTINATION_BASE_URL}${destinationPath}?${params.toString()}`;
     console.log(`[Slug Redirect] ${slugId} -> ${forwardUrl}`);
     return res.redirect(302, forwardUrl);
+  }
+
+  // Check if this is a real expired slug (was created but expired and cleaned up)
+  if (expiredSlugs.has(slugId)) {
+    return res.redirect(302, '/verification-timeout.html');
   }
 
   // Backward compatibility: allow explicit state/id query parameters
